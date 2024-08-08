@@ -3,18 +3,20 @@ package com.api.payroll.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "PRICES")
-public class Prices {
+public class PricesModel {
 
-    @EmbeddedId
-    private PricesPK pricesID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PRICELIST")
+    private Long priceList;
 
-    //  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    //   @JoinColumn(name = "brand_id", insertable = false, updatable = false)
+    @Column(name = "PRODUCT_ID")
+    private Long productId;
+
     @Column(name = "brand_id")
     private Long brandId;
 
@@ -33,12 +35,20 @@ public class Prices {
     @Column(name = "curr")
     private String curr;
 
-    public PricesPK getPricesID() {
-        return pricesID;
+    public Long getPriceList() {
+        return priceList;
     }
 
-    public void setPricesID(PricesPK pricesID) {
-        this.pricesID = pricesID;
+    public void setPriceList(Long priceList) {
+        this.priceList = priceList;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getBrandId() {

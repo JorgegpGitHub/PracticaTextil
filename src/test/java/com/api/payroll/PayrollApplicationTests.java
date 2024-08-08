@@ -23,18 +23,26 @@ class PayrollApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
+    private boolean registerDataTables = true;
+
     //load JSON files
     private String loadJsonFromFile(String filePath) throws Exception {
         return Files.readString(Path.of(filePath));
     }
 
     //register data for BrandInventory and Prices
-    private void registerDataTables(String brandInventoryPath, String pricesPath) throws Exception {
-        String brandInventoryList = loadJsonFromFile(brandInventoryPath);
+    private void registerDataTables(String brandPath, String productPath, String pricesPath) throws Exception {
+        String brandList = loadJsonFromFile(brandPath);
+        String productList = loadJsonFromFile(productPath);
         String pricesList = loadJsonFromFile(pricesPath);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/brand/registerData")
-                        .content(brandInventoryList)
+                        .content(brandList)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/product/registerData")
+                        .content(productList)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -47,7 +55,7 @@ class PayrollApplicationTests {
     //GET request and return the result
     private String performGetRequest(String requestBodyPath) throws Exception {
         String inputParams = loadJsonFromFile(requestBodyPath);
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/prices/getProductByProductIdDateBrandId")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/prices/getFirstPricesByProductIdBrandIdDate")
                         .content(inputParams)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -66,13 +74,16 @@ class PayrollApplicationTests {
             "noneProductAvailable"
     })
     public void getDetailSaleProduct(String testCase) throws Exception {
-        //Data files
-        String brandInventoryPath = "src/test/Util/DataTable/BrandInventoryList.json";
-        String pricesPath = "src/test/Util/DataTable/PricesList.json";
         String requestBodyPath = String.format("src/test/Util/RequestBodyExample/%s.json", testCase);
 
+        //Data files
+        String brandPath = "src/test/Util/DataTable/BrandList.json";
+        String productPath = "src/test/Util/DataTable/ProductList.json";
+        String pricesPath = "src/test/Util/DataTable/PricesList.json";
+
         //Register data
-        registerDataTables(brandInventoryPath, pricesPath);
+        registerDataTables(brandPath, productPath, pricesPath);
+        registerDataTables = false;
 
         //Execute get request
         String responseContent = performGetRequest(requestBodyPath);

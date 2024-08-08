@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Gorra",
+    "description": "Gorra",
+    "active": "S"
+  },
+  {
+    "id": 2,
+    "name": "Zapatilla",
+    "description": "Zapatilla",
+    "active": "S"
+  },
+  {
+    "id": 3,
+    "name": "Camiseta",
+    "description": "Camiseta",
+    "active": "S"
+  },
+  {
+    "id": 4,
+    "name": "Abrigo",
+    "description": "Abrigo",
+    "active": "S"
+  },
+  {
+    "id": 5,
+    "name": "Medias",
+    "description": "Medias",
+    "active": "S"
+  }
+]

@@ -1,22 +1,22 @@
 package com.api.payroll.util;
 
 import com.api.payroll.dto.PricesDto;
-import com.api.payroll.models.Prices;
+import com.api.payroll.models.PricesModel;
 
 public class Util {
 
-    public static PricesDto pricesToPricesDto(Prices prices) {
+    public static PricesDto pricesToPricesDto(PricesModel pricesModel) {
         PricesDto pricesDto = null;
 
-        if(prices != null) {
+        if(pricesModel != null) {
             pricesDto = new PricesDto();
-            pricesDto.setPriceList(prices.getPricesID().getPriceList());
-            pricesDto.setProductId(prices.getPricesID().getProductId());
-            pricesDto.setBrandId(prices.getBrandId());
-            pricesDto.setPrice(prices.getPrice());
-            pricesDto.setCurr(prices.getCurr());
-            pricesDto.setStartDate(prices.getStartDate());
-            pricesDto.setEndDate(prices.getEndDate());
+            pricesDto.setPriceList(pricesModel.getPriceList());
+            pricesDto.setProductId(pricesModel.getProductId());
+            pricesDto.setBrandId(pricesModel.getBrandId());
+            pricesDto.setPrice(pricesModel.getPrice());
+            pricesDto.setCurr(pricesModel.getCurr());
+            pricesDto.setStartDate(pricesModel.getStartDate());
+            pricesDto.setEndDate(pricesModel.getEndDate());
         }
 
         return pricesDto;
